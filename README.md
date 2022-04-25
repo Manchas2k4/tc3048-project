@@ -44,15 +44,15 @@ program ::= <statement-sequence>
   <pendown-statement> |
   <color-statement> |
   <penwidth-statement>
-<clear-statement> ::= (CLEAR | CS)
+<clear-statement> ::= (CLEAR | CLS)
 <circle-statement> ::= CIRCLE <simple-expression>
 <arc-statement> ::= ARC <simple-expression>
 <penup-statement> ::= (PENUP | PU)
 <pendown-statement> ::= (PENDOWN | PD)
-<color-statement> ::= COLOR '(' <simple-expression> ',' <simple-expression> ',' <simple-expression> ')'
+<color-statement> ::= COLOR <simple-expression> <simple-expression> <simple-expression> ']'
 <penwidth-statement> ::= PENWIDTH <simple-expression>
 
-<text-statement> ::= PRINT '(' <element> <more_elements> ')'
+<text-statement> ::= PRINT '[' <element> <more_elements> ']'
 <more_elements> := ',' <element> <more_elements>
 <more_elements> := ' '
 element :=
