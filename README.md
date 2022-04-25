@@ -98,7 +98,7 @@ term ::= <factor> <extended-term>
   <true>   |
   <false>  |
   '(' <expression> ')' |
-  'n''o''t' <factor>
+  NOT <factor>
 
 relational-operator ::= '=' | '<''>' | '<' | '<''=' | '>' | '>''='
 
