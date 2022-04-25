@@ -1,0 +1,12 @@
+var i;
+// tambien se puede usar fd (10 + 40)
+i = 0;
+while (i < 6) {
+	print("i = ", i);
+	if (i == 3) {
+		print("i equals ", 3);
+	} else {
+		print ("i not equals ", 3);
+	}
+	i = i + 1;
+}

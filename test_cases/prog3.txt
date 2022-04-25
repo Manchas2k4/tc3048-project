@@ -1,0 +1,15 @@
+var i;
+// tambien se puede usar fd (10 + 40)
+i = 0;
+while (i < 6) {
+	bk 100;
+	lt 20;
+	i = i + 1;
+}
+
+penup;
+
+fd 100;
+bk 90;
+
+pendown;

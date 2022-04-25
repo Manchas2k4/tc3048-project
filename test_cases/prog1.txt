@@ -1,0 +1,7 @@
+var i;
+
+while (i < 100) {
+	print ("i=", i);
+	i = i + 10;
+}
+// tambien se puede usar fd (10 + 40)

@@ -1,0 +1,37 @@
+var i;
+
+i = 10;
+while (i <= 360) {
+    var j;
+    j = 1;
+    while (j <= 4) {
+        // tambien se puede usar fd (10 + 40)
+        forward (10 + 30);
+        // tambien se puede usar lt (45 + 45)
+        left (89 + 1);
+        j = j + 1;
+    }
+    lt i;
+    i = i + 10;
+}
+
+penup;
+move 100, 100;
+pendown;
+
+i = 10;
+while (i <= 360) {
+    var j;
+    j = 1;
+    while (j <= 3) {
+        // tambien se puede usar bk (10 + 40)
+        backward (10 + 30);
+        // tambien se puede usar rt (60 + 60)
+        right (120 + 0);
+        j = j + 1;
+    }
+    rt i;
+    i = i + 10;
+}
+
+home;
