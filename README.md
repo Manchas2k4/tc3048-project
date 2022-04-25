@@ -28,13 +28,13 @@ program ::= <statement-sequence>
       <sety-statement> |
       <setxy-statement> |
       HOME
-<forward-statement> ::=  (FORWARD | FD) <expression>
-<backward-statement> ::= (BACKWARD | BK) <expression>
-<right-statement> ::= (RIGHT | RT) <expression>
-<left-statement> ::= (LEFT | LT) <expression>
-<setx-statement> ::= SETX <expression>
-<sety-statement> ::= SETY <expression>
-<setxy-statement> ::= SETXY <expression> <expression>
+<forward-statement> ::=  (FORWARD | FD) <simple-expression>
+<backward-statement> ::= (BACKWARD | BK) <simple-expression>
+<right-statement> ::= (RIGHT | RT) <simple-expression>
+<left-statement> ::= (LEFT | LT) <simple-expression>
+<setx-statement> ::= SETX <simple-expression>
+<sety-statement> ::= SETY <simple-expression>
+<setxy-statement> ::= SETXY <simple-expression> <simple-expression>
 
 <drawing-statement> :=
   <clear-statement> |
@@ -64,20 +64,27 @@ element :=
 <structured-statement> ::=
   <repetitive-statement> |
   <conditional-statement>
-<repetitive-statement> ::= REPEAT <expression> '[' <statement-sequence> ']'
+<repetitive-statement> ::= 
+  REPEAT <simple-expression> '[' <statement-sequence> ']'
 conditional-statement ::=
   <if-statement> |
   <if-else-statement>
-<if-statement> ::= IF <expression> '[' <if-true> ']'
-<if-else-statement> ::= IFELSE <expression> '[' <if-true> ']' '[' <if-false> ']'
+<if-statement> ::= 
+  IF <expression> '[' <if-true> ']'
+<if-else-statement> ::= 
+  IFELSE <expression> '[' <if-true> ']' '[' <if-false> ']'
 <if-true> ::= <statement-sequence>
 <if-false> ::= <statement-sequence>
 
 <expression> ::= <simple-expression> <extended-expression>
-<extended-expression> ::= <relational-operator> <simple-expression>
+<extended-expression> ::= 
+  <relational-operator> <simple-expression> <extended-expression>
 <extended-expression> ::= ' '
 
-<simple-expression> ::= <sign> <term> <extended-simple-expression> ::= <addition-operator> <term> <extended-simple-expression>
+<simple-expression> ::= 
+  <sign> <term> <extended-simple-expression>
+<extended-simple-expression> ::= 
+  <addition-operator> <term> <extended-simple-expression>
 <extended-simple-expression> ::= ' '
 
 term ::= <factor> <extended-term>
@@ -91,7 +98,7 @@ term ::= <factor> <extended-term>
   <true>   |
   <false>  |
   '(' <expression> ')' |
-  'not' <factor>
+  'n''o''t' <factor>
 
 relational-operator ::= '=' | '<''>' | '<' | '<''=' | '>' | '>''='
 
