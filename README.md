@@ -49,7 +49,7 @@ program ::= <statement-sequence>
 <arc-statement> ::= ARC <simple-expression>
 <penup-statement> ::= (PENUP | PU)
 <pendown-statement> ::= (PENDOWN | PD)
-<color-statement> ::= COLOR <simple-expression> <simple-expression> <simple-expression> ']'
+<color-statement> ::= COLOR <simple-expression> <simple-expression> <simple-expression>
 <penwidth-statement> ::= PENWIDTH <simple-expression>
 
 <text-statement> ::= PRINT '[' <element> <more_elements> ']'
