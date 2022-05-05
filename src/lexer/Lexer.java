@@ -17,11 +17,9 @@ public class Lexer {
 		this.peek = ' ';
 
 		this.input = input;
-		addReserveWord(new Word("var", Tag.VAR));
-		addReserveWord(new Word("print", Tag.PRINT));
-		addReserveWord(new Word("while", Tag.WHILE));
-		addReserveWord(new Word("if", Tag.IF));
-		addReserveWord(new Word("else", Tag.ELSE));
+		addReserveWord(new Word("MAKE", Tag.MAKE));
+		addReserveWord(new Word("FORWARD", Tag.FORWARD));
+		addReserveWord(new Word("FD", Tag.FORWARD));
 	}
 
 	private void readch() throws IOException {
@@ -37,7 +35,7 @@ public class Lexer {
 		return true;
 	}
 
-	public Token scan() throws IOException {
+	private void skipSpaces() throws IOException {
 		for ( ; ; readch() ) {
 			if (peek == ' ' || peek == '\t' || peek == '\r') {
 				continue;
@@ -47,15 +45,25 @@ public class Lexer {
 				break;
 			}
 		}
+	}
+
+	public Token scan() throws IOException {
+		skipSpaces();
+
+		// ADD CODE TO SKIP COMMENTS HERE
 
 		switch(peek) {
-			case '=' : if (readch('=')) return Word.Eq; else return new Token('=');
-			case '!' : if (readch('=')) return Word.Neq;
-			case '<' : if (readch('=')) return Word.Leq; else return new Token('<');
-			case '>' : if (readch('=')) return Word.Geq; else return new Token('>');
-			case '#' : if (readch('t')) return Word.True;
-					   else if (readch('f')) return Word.False;
-					   else return new Token('#');
+			case '<':
+				if (readch('=')) return Word.Leq;
+				else if (readch('>')) return Word.Neq;
+				else return new Token('<');
+			case '>':
+				if (readch('=')) return Word.Geq;
+				else return new Token('>');
+			case '#':
+				if (readch('t')) return Word.True;
+				else if (readch('f')) return Word.False;
+				else return new Token('#');
 		}
 
 		if (peek == '"') {
@@ -75,6 +83,9 @@ public class Lexer {
 				v = (10 * v) + Character.digit(peek, 10);
 				readch();
 			} while ( Character.isDigit(peek) );
+
+			// ADD CODE TO PROCESS DECIMAL PART HERE
+
 			return new Number(v);
 		}
 

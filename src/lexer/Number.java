@@ -1,18 +1,18 @@
 package lexer;
 
 public class Number extends Token {
-	private int value;
-	
+	private double value;
+
 	public Number(int value) {
 		super(Tag.NUMBER);
 		this.value = value;
 	}
-	
-	public int getValue() {
+
+	public double getValue() {
 		return value;
 	}
-	
+
 	public String toString() {
-		return super.toString() + " <-> value = "  + value;
+		return "NUMBER value: "  + value;
 	}
 }
