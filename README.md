@@ -55,11 +55,7 @@ program ::= <statement-sequence>
 <text-statement> ::= PRINT '[' <element> <more_elements> ']'
 <more_elements> := ',' <element> <more_elements>
 <more_elements> := ' '
-element :=
-  <expression> |
-  <identifier> |
-  <number> |
-  <string>
+element := <expression> 
 
 <structured-statement> ::=
   <repetitive-statement> |
