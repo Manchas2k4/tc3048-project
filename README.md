@@ -17,7 +17,7 @@ program ::= <statement-sequence>
   <drawing-statement> |
   <text-statement>
 
-<assigment-statement> ::= MAKE <identifier> <expression>
+<assigment-statement> ::= MAKE <identifier> <arithmetic-expression>
 
 <movement-statement> ::=
       <forward-statement> |
@@ -28,13 +28,13 @@ program ::= <statement-sequence>
       <sety-statement> |
       <setxy-statement> |
       HOME
-<forward-statement> ::=  (FORWARD | FD) <simple-expression>
-<backward-statement> ::= (BACKWARD | BK) <simple-expression>
-<right-statement> ::= (RIGHT | RT) <simple-expression>
-<left-statement> ::= (LEFT | LT) <simple-expression>
-<setx-statement> ::= SETX <simple-expression>
-<sety-statement> ::= SETY <simple-expression>
-<setxy-statement> ::= SETXY <simple-expression> <simple-expression>
+<forward-statement> ::=  (FORWARD | FD) <arithmetic-expression>
+<backward-statement> ::= (BACKWARD | BK) <arithmetic-expression>
+<right-statement> ::= (RIGHT | RT) <arithmetic-expression>
+<left-statement> ::= (LEFT | LT) <arithmetic-expression>
+<setx-statement> ::= SETX <arithmetic-expression>
+<sety-statement> ::= SETY <arithmetic-expression>
+<setxy-statement> ::= SETXY <arithmetic-expression> <arithmetic-expression>
 
 <drawing-statement> :=
   <clear-statement> |
@@ -45,30 +45,33 @@ program ::= <statement-sequence>
   <color-statement> |
   <penwidth-statement>
 <clear-statement> ::= (CLEAR | CLS)
-<circle-statement> ::= CIRCLE <simple-expression>
-<arc-statement> ::= ARC <simple-expression>
+<circle-statement> ::= CIRCLE <arithmetic-expression>
+<arc-statement> ::= ARC <arithmetic-expression>
 <penup-statement> ::= (PENUP | PU)
 <pendown-statement> ::= (PENDOWN | PD)
-<color-statement> ::= COLOR <simple-expression> <simple-expression> <simple-expression>
-<penwidth-statement> ::= PENWIDTH <simple-expression>
+<color-statement> ::= COLOR <arithmetic-expression> <arithmetic-expression> <arithmetic-expression>
+<penwidth-statement> ::= PENWIDTH <arithmetic-expression>
 
 <text-statement> ::= PRINT '[' <element> <more_elements> ']'
+element := 
+  <string> |
+  <boolean-expression> | 
+  <arithmetic-expression>
 <more_elements> := ',' <element> <more_elements>
 <more_elements> := ' '
-element := <expression> 
 
 <structured-statement> ::=
   <repetitive-statement> |
   <conditional-statement>
 <repetitive-statement> ::= 
-  REPEAT <simple-expression> '[' <statement-sequence> ']'
+  REPEAT <arithmetic-expression> '[' <statement-sequence> ']'
 conditional-statement ::=
   <if-statement> |
   <if-else-statement>
 <if-statement> ::= 
-  IF <expression> '[' <if-true> ']'
+  IF <boolean-expression> '[' <if-true> ']'
 <if-else-statement> ::= 
-  IFELSE <expression> '[' <if-true> ']' '[' <if-false> ']'
+  IFELSE <boolean-expression> '[' <if-true> ']' '[' <if-false> ']'
 <if-true> ::= <statement-sequence>
 <if-false> ::= <statement-sequence>
 
