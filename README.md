@@ -97,35 +97,26 @@ conditional-statement ::=
   '(' <boolean-expresion> ')' |
   NOT <boolean-factor>
 
-<expression> ::= <simple-expression> <extended-expression>
-<extended-expression> ::= 
-  <relational-operator> <simple-expression> <extended-expression>
-<extended-expression> ::= ' '
+<arithmetic-expression> ::= 
+  [ <sign> ] <arithmetic-term> <extended-arithmetic-expression>
+<extended-arithmetic-expression> ::= 
+  <addition-operator> <arithmetic-term> <extended-arithmetic-expression>
+<extended-arithmetic-expression> ::= ' '
 
-<simple-expression> ::= 
-  <sign> <term> <extended-simple-expression>
-<extended-simple-expression> ::= 
-  <addition-operator> <term> <extended-simple-expression>
-<extended-simple-expression> ::= ' '
+<arithmetic-term> ::= <arithmetic-factor> <extended-arithmetic-term>
+<extended-arithmetic-term> ::= <multiplication-operator> <arithmetic-factor> <extended-term>
+<extended-arithmetic-term> ::= ' '
 
-term ::= <factor> <extended-term>
-<extended-term> ::= <multiplication-operator> <factor> <extended-term>
-<extended-term> ::= ' '
-
-<factor> ::=
+<arithmetic-factor> ::=
   <identifier> |
   <number> |
-  <string> |
-  <true>   |
-  <false>  |
-  '(' <expression> ')' |
-  NOT <factor>
+  '(' <arithmetic-expression> ')' 
 
 relational-operator ::= '=' | '<''>' | '<' | '<''=' | '>' | '>''='
 
-addition-operator ::= '+' | '-' | OR
+addition-operator ::= '+' | '-'
 
-multiplication-operator ::= '*' | '/' | MOD | AND
+multiplication-operator ::= '*' | '/' | MOD
 
 <identifier> ::= <letter> <characters>
 <characters> ::= (<letter> | <digit>) <characters>
