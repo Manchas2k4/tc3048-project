@@ -75,6 +75,28 @@ conditional-statement ::=
 <if-true> ::= <statement-sequence>
 <if-false> ::= <statement-sequence>
 
+
+<boolean-expresion> ::= <simple-boolean-expression> <extended-boolean-expression>
+<extended-boolean-expression> ::= 
+  <relational-operator> <simple-boolean-expression> <extended-boolean-expression>
+<extended-boolean-expression> ::= ' '
+
+<simple-boolean-expression> ::= 
+  <boolean-term> <extended-simple-boolean-expression>
+<extended-simple-boolean-expression> ::= 
+  OR <boolean-term> <extended-simple-boolean-expression>
+<extended-simple-expression> ::= ' '
+
+<boolean-term> ::= <bolean-factor> <extended-boolean-term>
+<extended-boolean-term> ::= AND <boolean-factor> <extended-boolean-term>
+<extended-boolean-term> ::= ' '
+
+<boolean-factor> ::=
+  <true>   |
+  <false>  |
+  '(' <boolean-expresion> ')' |
+  NOT <boolean-factor>
+
 <expression> ::= <simple-expression> <extended-expression>
 <extended-expression> ::= 
   <relational-operator> <simple-expression> <extended-expression>
