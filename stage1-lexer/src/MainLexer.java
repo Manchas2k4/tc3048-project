@@ -8,7 +8,7 @@ import lexer.Token;
 public class MainLexer {
 	public static void main(String args[]) throws IOException {
 		if (args.length != 1) {
-			System.out.println("usage: java ConsoleApp file");
+			System.out.println("usage: java MainLexer file");
 			System.exit(0);
 		}
 		
