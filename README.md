@@ -122,7 +122,7 @@ multiplication-operator ::= '*' | '/' | MOD
 <characters> ::= (<letter> | <digit>) <characters>
 <characters> ::= ' '
 
-<number> -> <integer-number> | <real-number>
+<number> ::= <integer-number> | <real-number>
 <integer-number> ::= <digit-sequence>
 <digit-sequence> ::= <sign> <unsigned-digit-sequence>
 <unsigned-digit-sequence> ::= <digit> <digits>
@@ -130,8 +130,8 @@ multiplication-operator ::= '*' | '/' | MOD
 <digits> ::= ' '
 <sign> ::= '+' | '-' | ' '
 
-<true> -> '#''t'
-<false> -> '#''f'
+<true> ::= '#''t'
+<false> ::= '#''f'
 
 <letter> ::= ['A'-'Z'] | ['a'-'z']
 <digit> ::= ['0'-'9']
