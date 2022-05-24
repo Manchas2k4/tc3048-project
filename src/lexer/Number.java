@@ -3,7 +3,7 @@ package lexer;
 public class Number extends Token {
 	private double value;
 
-	public Number(int value) {
+	public Number(double value) {
 		super(Tag.NUMBER);
 		this.value = value;
 	}

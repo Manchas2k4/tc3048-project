@@ -1,5 +1,6 @@
 package lexer;
 
+import errors.SyntaxError;
 import java.io.*;
 import java.util.Hashtable;
 
@@ -20,6 +21,34 @@ public class Lexer {
 		addReserveWord(new Word("MAKE", Tag.MAKE));
 		addReserveWord(new Word("FORWARD", Tag.FORWARD));
 		addReserveWord(new Word("FD", Tag.FORWARD));
+		addReserveWord(new Word("BACKWARD", Tag.BACKWARD));
+		addReserveWord(new Word("BK", Tag.BACKWARD));
+		addReserveWord(new Word("LEFT", Tag.LEFT));
+		addReserveWord(new Word("LT", Tag.LEFT));
+		addReserveWord(new Word("RIGHT", Tag.RIGHT));
+		addReserveWord(new Word("RT", Tag.RIGHT));
+		addReserveWord(new Word("SETX", Tag.SETX));
+		addReserveWord(new Word("SETY", Tag.SETY));
+		addReserveWord(new Word("SETXY", Tag.SETXY));
+		addReserveWord(new Word("HOME", Tag.HOME));
+		addReserveWord(new Word("CLEAR", Tag.CLEAR));
+		addReserveWord(new Word("CLS", Tag.CLEAR));
+		addReserveWord(new Word("CIRCLE", Tag.CIRCLE));
+		addReserveWord(new Word("ARC", Tag.ARC));
+		addReserveWord(new Word("PENUP", Tag.PENUP));
+		addReserveWord(new Word("PU", Tag.PENUP));
+		addReserveWord(new Word("PENDOWN", Tag.PENDOWN));
+		addReserveWord(new Word("PD", Tag.PENDOWN));
+		addReserveWord(new Word("COLOR", Tag.COLOR));
+		addReserveWord(new Word("PENWIDTH", Tag.PENWIDTH));
+		addReserveWord(new Word("PRINT", Tag.PRINT));
+		addReserveWord(new Word("REPEAT", Tag.REPEAT));
+		addReserveWord(new Word("IF", Tag.IF));
+		addReserveWord(new Word("IFELSE", Tag.IFELSE));
+		addReserveWord(new Word("NOT", Tag.NOT));
+		addReserveWord(new Word("MOD", Tag.MOD));
+		addReserveWord(new Word("AND", Tag.AND));
+		addReserveWord(new Word("OR", Tag.OR));
 	}
 
 	private void readch() throws IOException {
@@ -47,10 +76,18 @@ public class Lexer {
 		}
 	}
 
-	public Token scan() throws IOException {
+	public Token scan() throws IOException, SyntaxError {
 		skipSpaces();
 
-		// ADD CODE TO SKIP COMMENTS HERE
+		if (peek == '%') {
+			for ( ; ; readch() ) {
+				if (peek == '\n') {
+					line = line + 1;
+					break;
+				}
+			}
+			skipSpaces();
+		}
 
 		switch(peek) {
 			case '<':
@@ -78,21 +115,32 @@ public class Lexer {
 		}
 
 		if (Character.isDigit(peek)) {
-			int v = 0;
+			double number = 0;
 			do {
-				v = (10 * v) + Character.digit(peek, 10);
+				number = (10 * number) + Character.digit(peek, 10);
 				readch();
 			} while ( Character.isDigit(peek) );
 
-			// ADD CODE TO PROCESS DECIMAL PART HERE
+			if (peek == '.') {
+				readch();
+				if (!Character.isDigit(peek)) {
+					throw new SyntaxError("NUMERIC");
+				}
 
-			return new Number(v);
+				double divisor = 10.0;
+				do {
+					number = number + (Character.digit(peek, 10) / divisor);
+					divisor = divisor * 10.0;
+					readch();
+				} while ( Character.isDigit(peek) );
+			}
+			return new Number(number);
 		}
 
 		if (Character.isLetter(peek)) {
 			StringBuffer b = new StringBuffer();
 			do {
-				b.append(Character.toLowerCase(peek));
+				b.append(Character.toUpperCase(peek));
 				readch();
 			} while ( Character.isLetterOrDigit(peek) ) ;
 			String s = b.toString();
