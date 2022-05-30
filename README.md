@@ -17,7 +17,7 @@ program ::= <statement-sequence>
   <drawing-statement> |
   <text-statement>
 
-<assigment-statement> ::= MAKE <identifier> <arithmetic-expression>
+<assigment-statement> ::= MAKE <identifier> <expression>
 
 <movement-statement> ::=
       <forward-statement> |
@@ -28,13 +28,13 @@ program ::= <statement-sequence>
       <sety-statement> |
       <setxy-statement> |
       HOME
-<forward-statement> ::=  (FORWARD | FD) <arithmetic-expression>
-<backward-statement> ::= (BACKWARD | BK) <arithmetic-expression>
-<right-statement> ::= (RIGHT | RT) <arithmetic-expression>
-<left-statement> ::= (LEFT | LT) <arithmetic-expression>
-<setx-statement> ::= SETX <arithmetic-expression>
-<sety-statement> ::= SETY <arithmetic-expression>
-<setxy-statement> ::= SETXY <arithmetic-expression> <arithmetic-expression>
+<forward-statement> ::=  (FORWARD | FD) <expression>
+<backward-statement> ::= (BACKWARD | BK) <expression>
+<right-statement> ::= (RIGHT | RT) <expression>
+<left-statement> ::= (LEFT | LT) <expression>
+<setx-statement> ::= SETX <expression>
+<sety-statement> ::= SETY <expression>
+<setxy-statement> ::= SETXY <expression> <expression>
 
 <drawing-statement> :=
   <clear-statement> |
@@ -45,18 +45,17 @@ program ::= <statement-sequence>
   <color-statement> |
   <penwidth-statement>
 <clear-statement> ::= (CLEAR | CLS)
-<circle-statement> ::= CIRCLE <arithmetic-expression>
-<arc-statement> ::= ARC <arithmetic-expression>
+<circle-statement> ::= CIRCLE <expression>
+<arc-statement> ::= ARC <expression>
 <penup-statement> ::= (PENUP | PU)
 <pendown-statement> ::= (PENDOWN | PD)
-<color-statement> ::= COLOR <arithmetic-expression> <arithmetic-expression> <arithmetic-expression>
-<penwidth-statement> ::= PENWIDTH <arithmetic-expression>
+<color-statement> ::= COLOR <expression> <expression> <expression>
+<penwidth-statement> ::= PENWIDTH <expression>
 
 <text-statement> ::= PRINT '[' <element> <more_elements> ']'
 element := 
   <string> |
-  <boolean-expression> | 
-  <arithmetic-expression>
+  <expression>
 <more_elements> := ',' <element> <more_elements>
 <more_elements> := ' '
 
@@ -64,71 +63,87 @@ element :=
   <repetitive-statement> |
   <conditional-statement>
 <repetitive-statement> ::= 
-  REPEAT <arithmetic-expression> '[' <statement-sequence> ']'
+  REPEAT <expression> '[' <statement-sequence> ']'
 conditional-statement ::=
   <if-statement> |
   <if-else-statement>
 <if-statement> ::= 
-  IF <boolean-expression> '[' <if-true> ']'
+  IF <expression> '[' <if-true> ']'
 <if-else-statement> ::= 
-  IFELSE <boolean-expression> '[' <if-true> ']' '[' <if-false> ']'
+  IFELSE <expression> '[' <if-true> ']' '[' <if-false> ']'
 <if-true> ::= <statement-sequence>
 <if-false> ::= <statement-sequence>
 
+<expression> ::= <conditional-expression>
 
-<boolean-expresion> ::= <simple-boolean-expression> <extended-boolean-expression>
-<extended-boolean-expression> ::= 
-  <relational-operator> <simple-boolean-expression> <extended-boolean-expression>
-<extended-boolean-expression> ::= ' '
+<conditional-expression> ::= 
+	<conditional-term> <extended-conditional-expression>
+<conditional-expression> ::=
+	OR <conditional-term> <extended-conditional-expression>
+<extended-conditional-expression> ::= ' '
 
-<simple-boolean-expression> ::= 
-  <boolean-term> <extended-simple-boolean-expression>
-<extended-simple-boolean-expression> ::= 
-  OR <boolean-term> <extended-simple-boolean-expression>
-<extended-simple-expression> ::= ' '
-
-<boolean-term> ::= <bolean-factor> <extended-boolean-term>
-<extended-boolean-term> ::= AND <boolean-factor> <extended-boolean-term>
+<conditional-term> ::= 
+	<equality-expression> <extended-conditional-term>
+<extended-conditional-and-expression> ::= 
+	AND <equality-expression> <extended-conditional-term>
 <extended-boolean-term> ::= ' '
 
-<boolean-factor> ::=
-  <true>   |
-  <false>  |
-  '(' <boolean-expresion> ')' |
-  NOT <boolean-factor>
+<equality-expression> ::=
+	<relational-expression> <extended-equality-expression>
+<extended-equality-expression> := 
+	'=' <relational-expression> <extended-equality-expression>
+<extended-equality-expression> := 
+	'<''>' <relational-expression> <extended-equality-expression>
+<extended-equality-expression> ::= ' '
 
-<arithmetic-expression> ::= 
-  [ <sign> ] <arithmetic-term> <extended-arithmetic-expression>
-<extended-arithmetic-expression> ::= 
-  <addition-operator> <arithmetic-term> <extended-arithmetic-expression>
-<extended-arithmetic-expression> ::= ' '
+<relational-expression> ::= 
+	<additive-expression> <extended-relational-expression>
+<extended-relational-expression> :=
+	'<' <additive-expression> <extended-relational-expression>
+<extended-relational-expression> ::=
+	'<''=' <additive-expression> <extended-relational-expression>
+<extended-relational-expression> :=
+	'>' <additive-expression> <extended-relational-expression>
+<extended-relational-expression> ::=
+	'>''=' <additive-expression> <extended-relational-expression>
+	
+<additive-expression> ::= 
+	<multiplicative-expression> <extended-additive-expression>
+<extended-additive-expression> ::=
+	'+'  <multiplicative-expression> <extended-additive-expression>
+<extended-additive-expression> ::=
+	'-'  <multiplicative-expression> <extended-additive-expression>
+	
+<multiplicative-expression> ::=
+	<unary-expression> <extended-multiplicative-expression>
+<extended-multiplicative-expression> :=
+	'*' <unary-expression> <extended-multiplicative-expression>
+<extended-multiplicative-expression> :=
+	'/' <unary-expression> <extended-multiplicative-expression>
+<extended-multiplicative-expression> :=
+	MOD <unary-expression> <extended-multiplicative-expression>
+	
+<unary-expression> ::= 
+	'-' <unary-expression> ||
+	'!' <unary-expression> ||
+	<primary-expression>
 
-<arithmetic-term> ::= <arithmetic-factor> <extended-arithmetic-term>
-<extended-arithmetic-term> ::= <multiplication-operator> <arithmetic-factor> <extended-term>
-<extended-arithmetic-term> ::= ' '
-
-<arithmetic-factor> ::=
-  <identifier> |
-  <number> |
-  '(' <arithmetic-expression> ')' 
-
-relational-operator ::= '=' | '<''>' | '<' | '<''=' | '>' | '>''='
-
-addition-operator ::= '+' | '-'
-
-multiplication-operator ::= '*' | '/' | MOD
-
+<primary-expression> ::= 
+	<identifier> ||
+	<number> ||
+	<true>	||
+	<false> || 
+	'(' <expression> ')'
+  
 <identifier> ::= <letter> <characters>
 <characters> ::= (<letter> | <digit>) <characters>
 <characters> ::= ' '
 
 <number> ::= <integer-number> | <real-number>
 <integer-number> ::= <digit-sequence>
-<digit-sequence> ::= <sign> <unsigned-digit-sequence>
-<unsigned-digit-sequence> ::= <digit> <digits>
+<digit-sequence> ::= <digit> <digits>
 <digits> ::= <digit> <digits>
 <digits> ::= ' '
-<sign> ::= '+' | '-' | ' '
 
 <true> ::= '#''t'
 <false> ::= '#''f'
