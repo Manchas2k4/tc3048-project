@@ -12,10 +12,17 @@ program ::= <statement-sequence>
   <structured-statement>
 
 <simple-statement> ::=
+  <declaration-statement> |
   <assignment-statement> |
   <movement-statement> |
   <drawing-statement> |
   <text-statement>
+  
+<declaration-statement> ::=
+  VAR <identifier> <identifier-list> ';'
+  
+<identifier-list> ::= ',' <identifier> <identifier-list>
+<identifier-list> ::= ' '
 
 <assigment-statement> ::= <identifier> := <expression>
 
@@ -52,12 +59,10 @@ program ::= <statement-sequence>
 <color-statement> ::= COLOR <expression> <expression> <expression>
 <penwidth-statement> ::= PENWIDTH <expression>
 
-<text-statement> ::= PRINT '[' <element> <more_elements> ']'
-element := 
-  <string> |
-  <expression>
-<more_elements> := ',' <element> <more_elements>
-<more_elements> := ' '
+<text-statement> ::= PRINT '[' <element> <element-list> ']'
+element := <string> | <expression>
+<element-list> := ',' <element> <element-list>
+<element-list> := ' '
 
 <structured-statement> ::=
   <repetitive-statement> |
