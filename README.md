@@ -17,7 +17,7 @@ program ::= <statement-sequence>
   <drawing-statement> |
   <text-statement>
 
-<assigment-statement> ::= MAKE <identifier> <expression>
+<assigment-statement> ::= <identifier> := <expression>
 
 <movement-statement> ::=
       <forward-statement> |
