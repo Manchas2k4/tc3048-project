@@ -24,7 +24,7 @@ program ::= <statement-sequence>
 <identifier-list> ::= ',' <identifier> <identifier-list>
 <identifier-list> ::= ' '
 
-<assigment-statement> ::= <identifier> := <expression>
+<assigment-statement> ::= MAKE <identifier> <expression>
 
 <movement-statement> ::=
       <forward-statement> |
