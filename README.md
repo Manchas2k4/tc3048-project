@@ -89,7 +89,7 @@ conditional-statement ::=
 
 <conditional-term> ::= 
 	<equality-expression> <extended-conditional-term>
-<extended-conditional-and-expression> ::= 
+<extended-conditional-term> ::= 
 	AND <equality-expression> <extended-conditional-term>
 <extended-boolean-term> ::= ' '
 
