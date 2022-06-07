@@ -121,11 +121,11 @@ conditional-statement ::=
 	
 <multiplicative-expression> ::=
 	<unary-expression> <extended-multiplicative-expression>
-<extended-multiplicative-expression> :=
+<extended-multiplicative-expression> ::=
 	'*' <unary-expression> <extended-multiplicative-expression>
-<extended-multiplicative-expression> :=
+<extended-multiplicative-expression> ::=
 	'/' <unary-expression> <extended-multiplicative-expression>
-<extended-multiplicative-expression> :=
+<extended-multiplicative-expression> ::=
 	MOD <unary-expression> <extended-multiplicative-expression>
 	
 <unary-expression> ::= 
