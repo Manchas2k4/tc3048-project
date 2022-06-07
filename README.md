@@ -83,7 +83,7 @@ conditional-statement ::=
 
 <conditional-expression> ::= 
 	<conditional-term> <extended-conditional-expression>
-<conditional-expression> ::=
+<extended-conditional-expression> ::=
 	OR <conditional-term> <extended-conditional-expression>
 <extended-conditional-expression> ::= ' '
 
