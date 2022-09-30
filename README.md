@@ -2,7 +2,7 @@
 # Analysis and Design of Advanced Algorithms (TC2038)
 
 ```
-program ::= <statement-sequence>
+<program> ::= <statement-sequence>
 
 <statement-sequence> ::= <statement> <statement-sequence>
 <statement-sequence> ::= ' '
