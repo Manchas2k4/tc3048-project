@@ -16,9 +16,10 @@ public class Token {
 		case Tag.GEQ	: return "value: >=";
 		case Tag.LEQ	: return "value: <=";
 		case Tag.NEQ	: return "value: <>";
+		case Tag.ASSIGNMENT	: return "value: :=";
 		case Tag.TRUE	: return "value: TRUE";
 		case Tag.FALSE	: return "value: FALSE";
-		case Tag.MAKE	: return "value: MAKE";
+		case Tag.VAR	: return "value: VAR";
 		case Tag.FORWARD	: return "value: FORWARD";
 		case Tag.BACKWARD	: return "value: BACKWARD";
 		case Tag.LEFT	: return "value: LEFT";

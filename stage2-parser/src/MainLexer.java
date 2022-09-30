@@ -1,12 +1,13 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import errors.SyntaxError;
 import lexer.Lexer;
 import lexer.Tag;
 import lexer.Token;
 
 public class MainLexer {
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws IOException, SyntaxError {
 		if (args.length != 1) {
 			System.out.println("usage: java MainLexer file");
 			System.exit(0);

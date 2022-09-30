@@ -17,7 +17,7 @@ public class Word extends Token {
 	}
 
 	public static final Word
-		Neq = new Word("<>", Tag.NEQ),
+		Neq = new Word("<>", Tag.NEQ), Assigment = new Word(":=", Tag.ASSIGNMENT),
 		Leq = new Word( "<=", Tag.LEQ), Geq = new Word(">=", Tag.GEQ),
 		True = new Word("#t",  Tag.TRUE), False = new Word("#f", Tag.FALSE);
 }

@@ -1,9 +1,10 @@
-MAKE SIZE 10
+VAR SIZE
+SIZE := 10
 REPEAT 30 [
 	REPEAT 4 [
 		FD SIZE
 		RT 90
 	]
 	RT 10
-	MAKE SIZE (SIZE + 5)
+	SIZE := (SIZE + 5)
 ]

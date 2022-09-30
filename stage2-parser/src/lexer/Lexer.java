@@ -18,7 +18,7 @@ public class Lexer {
 		this.peek = ' ';
 
 		this.input = input;
-		addReserveWord(new Word("MAKE", Tag.MAKE));
+		addReserveWord(new Word("VAR", Tag.VAR));
 		addReserveWord(new Word("FORWARD", Tag.FORWARD));
 		addReserveWord(new Word("FD", Tag.FORWARD));
 		addReserveWord(new Word("BACKWARD", Tag.BACKWARD));
@@ -101,10 +101,13 @@ public class Lexer {
 				if (readch('t')) return Word.True;
 				else if (readch('f')) return Word.False;
 				else return new Token('#');
+			case ':':
+				if (readch('=')) return Word.Assigment;
+				else return new Token(':');
 		}
 
 		if (peek == '"') {
-			String val = "";
+			String val = "" + peek;
 			do {
 				val = val + peek;
 				readch();
