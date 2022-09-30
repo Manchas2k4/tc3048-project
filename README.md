@@ -24,7 +24,7 @@
 <identifier-list> ::= ',' <identifier> <identifier-list>
 <identifier-list> ::= ' '
 
-<assigment-statement> ::= MAKE <identifier> <expression>
+<assigment-statement> ::= <identifier> ':''=' <expression>
 
 <movement-statement> ::=
       <forward-statement> |
