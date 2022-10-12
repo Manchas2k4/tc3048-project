@@ -19,7 +19,7 @@
   <text-statement>
   
 <declaration-statement> ::=
-  VAR <identifier> <identifier-list> ';'
+  VAR <identifier> <identifier-list>
   
 <identifier-list> ::= ',' <identifier> <identifier-list>
 <identifier-list> ::= ' '
