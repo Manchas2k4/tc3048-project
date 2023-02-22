@@ -1,5 +1,6 @@
 ![Tec de Monterrey](images/logotecmty.png)
 # Analysis and Design of Advanced Algorithms (TC2038)
+## Definition of a Logo dialect
 
 ```
 <program> ::= <statement-sequence>
