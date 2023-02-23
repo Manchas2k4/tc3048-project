@@ -8,7 +8,7 @@ class Tag(Enum):
 	GEQ = 258
 	LEQ = 259
 	NEQ = 260
-	EQ = 261
+	ASSIGN = 261
 	## REGULAR EXPRESSIONS ##
 	ID = 357
 	NUMBER = 358
@@ -35,7 +35,7 @@ class Token:
 			return "Token - value <="
 		elif self.__tag == Tag.NEQ:
 			return "Token - value <>"
-		elif self.__tag == Tag.EQ:
+		elif self.__tag == Tag.ASSIGN:
 			return "Token - value :="
 		elif self.__tag == Tag.TRUE:
 			return "Token - value TRUE"
@@ -148,19 +148,19 @@ class Lexer:
 		elif self.__peek == '#':
 			if self.readch('t'):
 				return Word(Tag.TRUE, "#t")
-			elif self.readch('>'):
+			elif self.readch('f'):
 				return Word(Tag.FALSE, "#f")
 			else:
 				return Token(ord('#'))
 		elif self.__peek == ':':
 			if self.readch('='):
 				#print("reading :=")
-				return Word(Tag.EQ, ":=")
+				return Word(Tag.ASSIGN, ":=")
 			else:
 				return Token(ord(':'))
 
 		if self.__peek  == '"':
-			val = ""
+			val = "\""
 			while True:
 				val = val + self.__peek
 				self.read()
