@@ -49,7 +49,7 @@
 
 <sety-statement> ::= SETY <expression>
 
-<setxy-statement> ::= SETXY <expression> <expression>
+<setxy-statement> ::= SETXY <expression> ',' <expression>
 
 <drawing-statement> :=
   <clear-statement> |
@@ -70,7 +70,7 @@
 
 <pendown-statement> ::= (PENDOWN | PD)
 
-<color-statement> ::= COLOR <expression> <expression> <expression>
+<color-statement> ::= COLOR <expression> ',' <expression> ',' <expression>
 
 <penwidth-statement> ::= PENWIDTH <expression>
 
