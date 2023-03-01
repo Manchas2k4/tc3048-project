@@ -63,6 +63,7 @@
 <text-statement> ::= PRINT '[' <element> <element-list> ']'
 
 element := <string> | <expression>
+
 <element-list> := ',' <element> <element-list>
 <element-list> := ' '
 
