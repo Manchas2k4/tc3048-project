@@ -36,12 +36,19 @@
       <sety-statement> |
       <setxy-statement> |
       HOME
+
 <forward-statement> ::=  (FORWARD | FD) <expression>
+
 <backward-statement> ::= (BACKWARD | BK) <expression>
+
 <right-statement> ::= (RIGHT | RT) <expression>
+
 <left-statement> ::= (LEFT | LT) <expression>
+
 <setx-statement> ::= SETX <expression>
+
 <sety-statement> ::= SETY <expression>
+
 <setxy-statement> ::= SETXY <expression> <expression>
 
 <drawing-statement> :=
@@ -52,12 +59,19 @@
   <pendown-statement> |
   <color-statement> |
   <penwidth-statement>
+  
 <clear-statement> ::= (CLEAR | CLS)
+
 <circle-statement> ::= CIRCLE <expression>
+
 <arc-statement> ::= ARC <expression>
+
 <penup-statement> ::= (PENUP | PU)
+
 <pendown-statement> ::= (PENDOWN | PD)
+
 <color-statement> ::= COLOR <expression> <expression> <expression>
+
 <penwidth-statement> ::= PENWIDTH <expression>
 
 <text-statement> ::= PRINT '[' <element> <element-list> ']'
