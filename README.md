@@ -77,12 +77,12 @@ element := <string> | <expression>
 conditional-statement ::=
   <if-statement> |
   <if-else-statement>
+  
 <if-statement> ::= 
-  IF <expression> '[' <if-true> ']'
+  IF <expression> '[' <statement-sequence> ']'
+  
 <if-else-statement> ::= 
-  IFELSE <expression> '[' <if-true> ']' '[' <if-false> ']'
-<if-true> ::= <statement-sequence>
-<if-false> ::= <statement-sequence>
+  IFELSE <expression> '[' <statement-sequence> ']' '[' <statement-sequence> ']'
 
 <expression> ::= <conditional-expression>
 
