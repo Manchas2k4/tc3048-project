@@ -68,8 +68,10 @@ element := <string> | <expression>
 <structured-statement> ::=
   <repetitive-statement> |
   <conditional-statement>
+
 <repetitive-statement> ::= 
   REPEAT <expression> '[' <statement-sequence> ']'
+
 conditional-statement ::=
   <if-statement> |
   <if-else-statement>
