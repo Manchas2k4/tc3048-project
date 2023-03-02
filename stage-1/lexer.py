@@ -76,7 +76,10 @@ class Word(Token):
 		return self.__lexeme
 	
 	def __str__(self):
-		return "Word - lexeme: " + str(self.__lexeme)
+		if (self.getTag() == Tag.ID):
+			return "Word - lexeme: " + str(self.__lexeme)
+		else:
+			return "Reserved Word - lexeme: " + str(self.__lexeme)
 
 class String(Token):
 	__string = ""
@@ -184,7 +187,7 @@ class Lexer:
 		if self.__peek.isalpha():
 			val = ""
 			while True:
-				val = val + self.__peek.lower()
+				val = val + self.__peek.upper()
 				self.read()
 				if not(self.__peek.isalnum()):
 					break
