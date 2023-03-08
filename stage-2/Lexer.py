@@ -1,6 +1,11 @@
 import os
 from enum import Enum
 
+class LexicalErrorException(Exception):
+    "Generated when there is a lexical error"
+    pass
+
+
 class Tag(Enum):
 	EOF = 65535
 	ERROR = 65534
@@ -18,6 +23,28 @@ class Tag(Enum):
 	## RESERVED WORDS ##
 	VAR = 457
 	FORWARD = 548
+	BACKWARD = 459
+	LEFT = 460
+	RIGHT = 461
+	SETX = 462
+	SETY = 463
+	SETXY = 464
+	CLEAR = 465
+	CIRCLE = 466
+	ARC = 467
+	PENUP = 468
+	PENDOWN = 469
+	COLOR = 470
+	PENWIDTH = 471
+	PRINT = 472
+	REPEAT = 473
+	IF = 474
+	IFELSE = 475
+	HOME = 476
+	NOT = 477
+	OR = 478
+	AND = 479
+	MOD = 480
 	
 class Token:
 	__tag = Tag.EOF
@@ -35,7 +62,7 @@ class Token:
 			return "Token - value <="
 		elif self.__tag == Tag.NEQ:
 			return "Token - value <>"
-		elif self.__tag == Tag.ASSIGN:
+		elif self.__tag == Tag.EQ:
 			return "Token - value :="
 		elif self.__tag == Tag.TRUE:
 			return "Token - value TRUE"
@@ -44,7 +71,7 @@ class Token:
 		elif self.__tag == Tag.VAR:
 			return "Token - value VAR"
 		else:
-			return "Token - value " + chr(self.__tag)
+			return "TOKEN - value " + chr(self.__tag)
 			
 class Number(Token):
 	__value = 0.0
@@ -76,7 +103,7 @@ class Word(Token):
 		return self.__lexeme
 	
 	def __str__(self):
-		if (self.getTag() == Tag.ID):
+		if self.getTag() == Tag.ID:
 			return "Word - lexeme: " + str(self.__lexeme)
 		else:
 			return "Reserved Word - lexeme: " + str(self.__lexeme)
@@ -111,7 +138,33 @@ class Lexer:
 		self.__words["VAR"] = Word(Tag.VAR, "VAR")
 		self.__words["FORWARD"] = Word(Tag.FORWARD, "FORWARD")
 		self.__words["FD"] = Word(Tag.FORWARD, "FORWARD")
-		## ADD ALL RESERVED WORDS ##
+		self.__words["BACKWARD"] = Word(Tag.BACKWARD, "BACKWARD")
+		self.__words["BK"] = Word(Tag.BACKWARD, "BACKWARD")
+		self.__words["LEFT"] = Word(Tag.LEFT, "LEFT")
+		self.__words["LT"] = Word(Tag.LEFT, "LEFT")
+		self.__words["RIGHT"] = Word(Tag.RIGHT, "RIGHT")
+		self.__words["RT"] = Word(Tag.RIGHT, "RIGHT")
+		self.__words["SETX"] = Word(Tag.SETX, "SETX")
+		self.__words["SETY"] = Word(Tag.SETY, "SETY")
+		self.__words["SETXY"] = Word(Tag.SETXY, "SETXY")
+		self.__words["HOME"] = Word(Tag.HOME, "HOME")
+		self.__words["CLEAR"] = Word(Tag.CLEAR, "CLEAR")
+		self.__words["CLS"] = Word(Tag.CLEAR, "CLEAR")
+		self.__words["ARC"] = Word(Tag.ARC, "ARC")
+		self.__words["PENUP"] = Word(Tag.PENUP, "PENUP")
+		self.__words["PU"] = Word(Tag.PENUP, "PENUP")
+		self.__words["PENDOWN"] = Word(Tag.PENDOWN, "PENDOWN")
+		self.__words["PD"] = Word(Tag.PENDOWN, "PENDOWN")
+		self.__words["COLOR"] = Word(Tag.COLOR, "COLOR")
+		self.__words["PENWIDTH"] = Word(Tag.PENWIDTH, "PENWIDTH")
+		self.__words["PRINT"] = Word(Tag.PRINT, "PRINT")
+		self.__words["REPEAT"] = Word(Tag.REPEAT, "REPEAT")
+		self.__words["IF"] = Word(Tag.IF, "IF")
+		self.__words["IFELSE"] = Word(Tag.IFELSE, "IFELSE")
+		self.__words["NOT"] = Word(Tag.NOT, "NOT")
+		self.__words["OR"] = Word(Tag.OR, "OR")
+		self.__words["AND"] = Word(Tag.AND, "AND")
+		self.__words["MOD"] = Word(Tag.MOD, "MOD")
 
 	def read(self):
 		self.__peek = self.__input.read(1)
@@ -135,6 +188,12 @@ class Lexer:
 		self.__skipSpaces()
 
 		## ADD CODE TO SKIP COMMENTS HERE ##
+		if self.__peek == '%':
+			while True:
+				self.read()
+				if self.__peek == '\n':
+					break
+			self.__skipSpaces()
 
 		if self.__peek == '<':
 			if self.readch('='):
@@ -151,14 +210,14 @@ class Lexer:
 		elif self.__peek == '#':
 			if self.readch('t'):
 				return Word(Tag.TRUE, "#t")
-			elif self.readch('f'):
+			elif self.readch('>'):
 				return Word(Tag.FALSE, "#f")
 			else:
 				return Token(ord('#'))
 		elif self.__peek == ':':
 			if self.readch('='):
 				#print("reading :=")
-				return Word(Tag.ASSIGN, ":=")
+				return Word(Tag.EQ, ":=")
 			else:
 				return Token(ord(':'))
 
@@ -175,13 +234,24 @@ class Lexer:
 			return String(val)
 
 		if self.__peek.isdigit():
-			val = 0
+			val = 0.0
 			while True:
 				val = (val * 10) + int(self.__peek)
 				self.read()
 				if not(self.__peek.isdigit()):
 					break
-			## ADD CODE TO PROCESS DECIMAL PART HERE ##
+			if self.__peek  == '.':
+				self.read()
+				if self.__peek.isdigit():
+					divisor = 10.0
+					while True:
+						val = val + (float(self.__peek) / divisor)
+						divisor = divisor * 10.0
+						self.read()
+						if not(self.__peek.isdigit()):
+							break
+				else:
+					raise Exception('Lexical error')
 			return Number(val)
 
 		if self.__peek.isalpha():

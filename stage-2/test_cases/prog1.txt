@@ -6,6 +6,6 @@ REPEAT (99 + 1) [
 	LT 90
 	% COMENTARIO 2
 	PRINT ["I", I]
-	I := (I + 10.123456789)
+	I := (I + 12.34567890)
 ]
 % COMENTARIO 3
