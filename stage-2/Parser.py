@@ -16,8 +16,10 @@ class Parser:
 
         self.__firstMultiplicativeExpression = self.__firstUnaryExpression
 
+        self.__firstExtendedAdditiveExpression = set((ord('+'), ord('-')))
+
     def __check(self, tag):
-        if self.__token == tag:
+        if self.__token.getTag() == tag:
             self.__token = self.__lex.scan()
         else:
             raise Exception('Syntax Error')
@@ -44,11 +46,13 @@ class Parser:
             raise Exception('Syntax Error')
         
     def __unaryExpression(self):
-        if self.__token.getTag() in self.__firstPrimaryExpression:
+        if self.__token.getTag() in self.__firstUnaryExpression:
             if self.__token.getTag() == ord('-'):
                 self.__check(ord('-'))
+                self.__unaryExpression()
             elif self.__token.getTag() == ord('!'):
                 self.__check(ord('!'))
+                self.__unaryExpression()
             else:
                 self.__primaryExpression()
         else: 
@@ -57,7 +61,6 @@ class Parser:
     def __extendedMultiplicativeExpression(self):
         if self.__token.getTag() in self.__firstExtendedMultiplicativeExpression:
             if self.__token.getTag() == ord('*'):
-                self.__check(ord('*'))
                 self.__check(ord('*'))
                 self.__unaryExpression()
                 self.__extendedMultiplicativeExpression()
@@ -69,3 +72,23 @@ class Parser:
                 self.__check(Tag.MOD)
                 self.__unaryExpression()
                 self.__extendedMultiplicativeExpression()
+
+    def __multiplicativeExpression(self):
+        if self.__token.getTag() in self.__firstMultiplicativeExpression:
+            self.__unaryExpression()
+            self.__multiplicativeExpression()
+        else:
+            raise Exception('Syntax Error')
+        
+    def __extendedAdditiveExpression(self):
+        if self.__token.getTag() in self.__firstExtendedAdditiveExpression:
+            if self.__token.getTag() == ord('+'):
+                self.__check(ord('+'))
+                self.__multiplicativeExpression()
+                self.__extendedAdditiveExpression()
+            elif self.__token.getTag() == ord('-'):
+                self.__check(ord('-'))
+                self.__multiplicativeExpression()
+                self.__extendedAdditiveExpression()
+        
+    
