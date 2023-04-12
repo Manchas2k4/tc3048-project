@@ -1,4 +1,3 @@
-import os
 from enum import Enum
 
 class Tag(Enum):
@@ -21,12 +20,17 @@ class Tag(Enum):
 	
 class Token:
 	__tag = Tag.EOF
+	__value = None
 	
-	def __init__(self, value):
-		self.__tag = value
+	def __init__(self, tagId, val = None):
+		self.__tag = tagId
+		self.__value = val
 		
 	def getTag(self):
 		return self.__tag
+	
+	def getValue(self):
+		return self.__value
 		
 	def __str__(self):
 		if self.__tag == Tag.GEQ:
@@ -44,73 +48,20 @@ class Token:
 		elif self.__tag == Tag.VAR:
 			return "Token - value VAR"
 		else:
-			return "Token - value " + chr(self.__tag)
+			return "Token - value " + str(self.__tag)
 			
-class Number(Token):
-	__value = 0.0
-	
-	def __init__(self, val):
-		super().__init__(Tag.NUMBER)
-		self.__value = val
-
-	def getTag(self):
-		return super().getTag()
-	
-	def getValue(self):
-		return self.__value
-	
-	def __str__(self):
-		return "Number - value: " + str(self.__value)
-	
-class Word(Token):
-	__lexeme = ""
-	
-	def __init__(self, tag, lex):
-		super().__init__(tag)
-		self.__lexeme = lex
-
-	def getTag(self):
-		return super().getTag()
-	
-	def getLexeme(self):
-		return self.__lexeme
-	
-	def __str__(self):
-		if (self.getTag() == Tag.ID):
-			return "Word - lexeme: " + str(self.__lexeme)
-		else:
-			return "Reserved Word - lexeme: " + str(self.__lexeme)
-
-class String(Token):
-	__string = ""
-	
-	def __init__(self, s):
-		super().__init__(Tag.STRING)
-		self.__string = s
-
-	def getTag(self):
-		return super().getTag()
-	
-	def getString(self):
-		return self.__string
-	
-	def __str__(self):
-		return "String - text: " + str(self.__string)
-
 class Lexer:
 	__peek = ' '
 	__words = {}
 	__input = None
 
 	def __init__(self, filepath):
-		#assert(not(os.path.isfile(filepath)), "File Not Found")
-		
 		self.__input = open(filepath, "r")
 		self.__peek = ' '
 
-		self.__words["VAR"] = Word(Tag.VAR, "VAR")
-		self.__words["FORWARD"] = Word(Tag.FORWARD, "FORWARD")
-		self.__words["FD"] = Word(Tag.FORWARD, "FORWARD")
+		self.__words["VAR"] = Token(Tag.VAR, "VAR")
+		self.__words["FORWARD"] = Token(Tag.FORWARD, "FORWARD")
+		self.__words["FD"] = Token(Tag.FORWARD, "FORWARD")
 		## ADD ALL RESERVED WORDS ##
 
 	def read(self):
@@ -138,9 +89,9 @@ class Lexer:
 
 		if self.__peek == '<':
 			if self.readch('='):
-				return Word(Tag.LEQ, "<=")
+				return Token(Tag.LEQ, "<=")
 			elif self.readch('>'):
-				return Word(Tag.NEQ, "<>")
+				return Token(Tag.NEQ, "<>")
 			else:
 				return Token(ord('<'))
 		elif self.__peek == '>':
@@ -150,15 +101,15 @@ class Lexer:
 				return Token(ord('>'))
 		elif self.__peek == '#':
 			if self.readch('t'):
-				return Word(Tag.TRUE, "#t")
+				return Token(Tag.TRUE, "#t")
 			elif self.readch('f'):
-				return Word(Tag.FALSE, "#f")
+				return Token(Tag.FALSE, "#f")
 			else:
 				return Token(ord('#'))
 		elif self.__peek == ':':
 			if self.readch('='):
 				#print("reading :=")
-				return Word(Tag.ASSIGN, ":=")
+				return Token(Tag.ASSIGN, ":=")
 			else:
 				return Token(ord(':'))
 
@@ -172,7 +123,7 @@ class Lexer:
 			
 			val = val + self.__peek
 			self.read()
-			return String(val)
+			return Token(Tag.STRING, val)
 
 		if self.__peek.isdigit():
 			val = 0
@@ -182,7 +133,7 @@ class Lexer:
 				if not(self.__peek.isdigit()):
 					break
 			## ADD CODE TO PROCESS DECIMAL PART HERE ##
-			return Number(val)
+			return Token(Tag.NUMBER, val)
 
 		if self.__peek.isalpha():
 			val = ""
@@ -195,8 +146,8 @@ class Lexer:
 			if val in self.__words:
 				return self.__words[val]
 
-			w = Word(Tag.ID, val)
-			self.__words[val] = Word(Tag.ID, val)
+			w = Token(Tag.ID, val)
+			self.__words[val] = Token(Tag.ID, val)
 			return w
 
 		if not(self.__peek):
