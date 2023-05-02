@@ -11,20 +11,24 @@ class Environment:
     
     def lookup(self, variable):
         if variable in self.__table:
+            # The variable is a local to this scope.
             return self.__table[variable]
         elif self.__previous != None:
+            # The variable maybe is declared in an upper scope.
             return self.__previous.lookup(variable)
         else: 
             return None
     
     def insert(self, variable):
         if not variable in self.__table:
-            self.__table[variable] = 0.0
+            # the variable has not been declared.
+            self.__table[variable] = (None, None)
             return True
         else:
+            # the variable has already been declared.
             return False
         
-    def set(self, variable, value):
+    def set(self, variable, type = None, value = None):
         env = self
         found = False
         while env != None:
@@ -33,9 +37,10 @@ class Environment:
                 break
             env = env.__previous
         
-        if not found:
-            env.__table[variable] = value
+        if found:
+            # the variable is declared.
+            env.__table[variable] = (type, value)
             return True
         else: 
-            # return False
-            raise Exception('Semantic Error - The variable has not been defined')
+            # the variable is not declared.
+            return False

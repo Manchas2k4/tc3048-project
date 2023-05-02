@@ -56,27 +56,31 @@ class Token:
 		
 	def __str__(self):
 		if self.__tag == Tag.GEQ:
-			return "'>='"
+			return "Token - value >="
 		elif self.__tag == Tag.LEQ:
-			return "'<='"
+			return "Token - value <="
 		elif self.__tag == Tag.NEQ:
-			return "'<>'"
+			return "Token - value <>"
 		elif self.__tag == Tag.ASSIGN:
-			return "':='"
+			return "Token - value :="
 		elif self.__tag == Tag.TRUE:
-			return "'#t'"
+			return "Token - value TRUE"
 		elif self.__tag == Tag.FALSE:
-			return "'#f'"
+			return "Token - value FALSE"
+		elif self.__tag == Tag.VAR:
+			return "Token - value VAR"
 		elif self.__tag == Tag.NUMBER:
-			return "numeric constant"
+			return "Number - value: " + str(self.__value)
+		elif self.__tag == Tag.NUMBER:
+			return "Number - value: " + str(self.__value)
 		elif self.__tag == Tag.ID:
-			return "'" + str(self.__value) + "'"
+			return "Token - lexeme: " + str(self.__value)
 		elif self.__tag >= Tag.VAR and self.__tag <= Tag.MOD:
-			return "'" +  str(self.__value).lower() + "'"
+			return "Reserved Token - lexeme: " + str(self.__value)
 		elif self.__tag == Tag.STRING:
-			return "string constant"
+			return "String - text: " + str(self.__value)
 		else:
-			return "'" + chr(self.__tag) + "'" 
+			return "Token - value " + chr(self.__tag)
 			
 class Lexer:
 	__peek = ' '
