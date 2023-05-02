@@ -16,11 +16,24 @@ class Parser:
 
         self.__firstMultiplicativeExpression = self.__firstUnaryExpression
 
-    def __check(self, tag):
-        if self.__token == tag:
-            self.__token = self.__lex.scan()
-        else:
-            raise Exception('Syntax Error')
+    def error(self, extra = None):
+		text = 'Line ' + str(self.__lex.getLine()) + " - " 
+		if extra == None:
+			text = text + "."
+		else:
+			text = text + extra
+		raise Exception(text)
+
+	def __check(self, tag):
+		if self.__token.getTag() == tag:
+			self.__token = self.__lex.scan()
+		else:
+			text = 'Line ' + str(self.__lex.getLine()) + " - expected "
+			if tag != Tag.ID:
+				text = text + str(Token(tag)) + " before " + str(self.__token) 
+			else:
+				text = text + "an identifier before " + str(self.__token) 
+			raise Exception(text)
     
     def analize(self):
         self.__token = self.__lex.scan()
@@ -41,7 +54,7 @@ class Parser:
                 # self.__expression()
                 self.__check(')')
         else:
-            raise Exception('Syntax Error')
+            self.error('Syntax Error')
         
     def __unaryExpression(self):
         if self.__token.getTag() in self.__firstPrimaryExpression:
@@ -52,7 +65,7 @@ class Parser:
             else:
                 self.__primaryExpression()
         else: 
-            raise Exception('Syntax Error')
+            self.error('Syntax Error')
         
     def __extendedMultiplicativeExpression(self):
         if self.__token.getTag() in self.__firstExtendedMultiplicativeExpression:
