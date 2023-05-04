@@ -60,15 +60,23 @@ class Parser:
 
 		self.__firstProgram = self.__firstStatementSequence
 
-	def __check(self, tag, extra = None):
+	def error(self, extra = None):
+		text = 'Line ' + str(self.__lex.getLine()) + " - " 
+		if extra == None:
+			text = text + "."
+		else:
+			text = text + extra
+		raise Exception(text)
+
+	def __check(self, tag):
 		if self.__token.getTag() == tag:
 			self.__token = self.__lex.scan()
 		else:
-			text = 'Line ' + str(self.__lex.getLine())
-			if extra == None:
-				text = text + "."
+			text = 'Line ' + str(self.__lex.getLine()) + " - expected "
+			if tag != Tag.ID:
+				text = text + str(Token(tag)) + " before " + str(self.__token) 
 			else:
-				text = text + extra
+				text = text + "an identifier before " + str(self.__token) 
 			raise Exception(text)
 	
 	def analize(self):
