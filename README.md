@@ -64,7 +64,7 @@
 
 <circle-statement> ::= CIRCLE <expression>
 
-<arc-statement> ::= ARC <expression>
+<arc-statement> ::= ARC <expression> ',' <expression>
 
 <penup-statement> ::= (PENUP | PU)
 
