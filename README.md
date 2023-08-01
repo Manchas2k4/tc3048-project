@@ -3,7 +3,14 @@
 ## Definition of a Logo dialect
 
 ```
-<program> ::= <statement-sequence>
+<program> ::= <declaration-sequence>
+			  <statement-sequence>
+			  
+<declaration-statement> ::=
+  VAR <identifier> <identifier-list>
+  
+<identifier-list> ::= ',' <identifier> <identifier-list>
+<identifier-list> ::= ' '
 
 <statement-sequence> ::= <statement> <statement-sequence>
 <statement-sequence> ::= ' '
@@ -13,18 +20,11 @@
   <structured-statement>
 
 <simple-statement> ::=
-  <declaration-statement> |
   <assignment-statement> |
   <movement-statement> |
   <drawing-statement> |
   <text-statement>
   
-<declaration-statement> ::=
-  VAR <identifier> <identifier-list>
-  
-<identifier-list> ::= ',' <identifier> <identifier-list>
-<identifier-list> ::= ' '
-
 <assigment-statement> ::= <identifier> ':''=' <expression>
 
 <movement-statement> ::=
@@ -37,19 +37,19 @@
       <setxy-statement> |
       HOME
 
-<forward-statement> ::=  (FORWARD | FD) <expression>
+<forward-statement> ::=  (FORWARD | FD) '(' <expression> ')'
 
-<backward-statement> ::= (BACKWARD | BK) <expression>
+<backward-statement> ::= (BACKWARD | BK) '(' <expression> ')'
 
-<right-statement> ::= (RIGHT | RT) <expression>
+<right-statement> ::= (RIGHT | RT) '(' <expression> ')'
 
-<left-statement> ::= (LEFT | LT) <expression>
+<left-statement> ::= (LEFT | LT) '(' <expression> ')'
 
-<setx-statement> ::= SETX <expression>
+<setx-statement> ::= SETX '(' <expression> ')'
 
-<sety-statement> ::= SETY <expression>
+<sety-statement> ::= SETY '(' <expression> ')'
 
-<setxy-statement> ::= SETXY <expression> ',' <expression>
+<setxy-statement> ::= SETXY '(' <expression> ',' <expression> ')'
 
 <drawing-statement> :=
   <clear-statement> |
@@ -60,21 +60,21 @@
   <color-statement> |
   <penwidth-statement>
   
-<clear-statement> ::= (CLEAR | CLS)
+<clear-statement> ::= (CLEAR | CLS) '(' ')'
 
-<circle-statement> ::= CIRCLE <expression>
+<circle-statement> ::= CIRCLE '(' <expression> ')'
 
-<arc-statement> ::= ARC <expression> ',' <expression>
+<arc-statement> ::= ARC '(' <expression> ',' <expression> ')'
 
-<penup-statement> ::= (PENUP | PU)
+<penup-statement> ::= (PENUP | PU) '(' ')'
 
-<pendown-statement> ::= (PENDOWN | PD)
+<pendown-statement> ::= (PENDOWN | PD) '(' ')'
 
-<color-statement> ::= COLOR <expression> ',' <expression> ',' <expression>
+<color-statement> ::= COLOR '(' <expression> ',' <expression> ',' <expression> ')'
 
-<penwidth-statement> ::= PENWIDTH <expression>
+<penwidth-statement> ::= PENWIDTH '(' <expression> ')'
 
-<text-statement> ::= PRINT '[' <element> <element-list> ']'
+<text-statement> ::= PRINT '(' <element> <element-list> ')'
 
 element := <string> | <expression>
 
@@ -86,17 +86,17 @@ element := <string> | <expression>
   <conditional-statement>
 
 <repetitive-statement> ::= 
-  REPEAT <expression> '[' <statement-sequence> ']'
+  WHILE '(' <expression> ')'  '[' <statement-sequence> ']'
 
 conditional-statement ::=
   <if-statement> |
   <if-else-statement>
   
 <if-statement> ::= 
-  IF <expression> '[' <statement-sequence> ']'
+  IF '(' <expression> ')' '[' <statement-sequence> ']'
   
 <if-else-statement> ::= 
-  IFELSE <expression> '[' <statement-sequence> ']' '[' <statement-sequence> ']'
+  IFELSE '(' <expression> ')' '[' <statement-sequence> ']' '[' <statement-sequence> ']'
 
 <expression> ::= <conditional-expression>
 
