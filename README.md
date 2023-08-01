@@ -3,8 +3,9 @@
 ## Definition of a Logo dialect
 
 ```
-<program> ::= <declaration-sequence>
-			  <statement-sequence>
+<program> ::=
+	<declaration-sequence>
+	<statement-sequence>
 			  
 <declaration-statement> ::=
   VAR <identifier> <identifier-list>
