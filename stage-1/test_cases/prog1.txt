@@ -1,7 +1,7 @@
 % COMENTARIO 1
 VAR I 
 I := 10.0
-REPEAT (99 + 1) [
+WHILE (I < 100) [
 	FD I
 	LT 90
 	% COMENTARIO 2

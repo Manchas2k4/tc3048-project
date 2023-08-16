@@ -1,13 +1,14 @@
-VAR SIZE, RED, GREEN, BLUE 
+VAR SIZE, RED, GREEN, BLUE , I, J
 
 SIZE := 10
 RED := 10
 GREEN := 0
 BLUE := 0
-
-REPEAT 30 [
+I := 1
+WHILE (I > 0)  [
   % MAKING A RECTANGLE
-	REPEAT 4 [
+  J = 1
+	WHILE (J < 4) [
 		FD SIZE
 		RT 90
 	]
@@ -20,4 +21,5 @@ REPEAT 30 [
 	RED := ((RED + 10) MOD 255)
 
   IFELSE SIZE MOD 2 = 0 [PENUP] [PENDOWN]
+  I = I + 1
 ]

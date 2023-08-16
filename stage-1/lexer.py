@@ -4,10 +4,10 @@ class Tag(IntEnum):
 	EOF = 65535
 	ERROR = 65534
 	## Operators ##
-	GEQ = 258
-	LEQ = 259
-	NEQ = 260
-	ASSIGN = 261
+	GEQ = 257
+	LEQ = 258
+	NEQ = 259
+	ASSIGN = 260
 	## REGULAR EXPRESSIONS ##
 	ID = 357
 	NUMBER = 358
@@ -16,7 +16,7 @@ class Tag(IntEnum):
 	FALSE = 361
 	## RESERVED WORDS ##
 	VAR = 457
-	FORWARD = 548
+	FORWARD = 458
 	
 class Token:
 	__tag = Tag.EOF
