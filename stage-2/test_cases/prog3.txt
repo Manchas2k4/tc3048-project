@@ -6,13 +6,13 @@ GREEN := 0
 BLUE := 0
 I := 1
 WHILE (I < 10)  [
-	REPEAT 4 [
-		FD SIZE
-		RT 90
+	WHILE (4) [
+		FD (SIZE)
+		RT (90)
 	]
-	RT 10
-	COLOR RED GREEN BLUE
+	RT (10)
+	COLOR (RED, GREEN, BLUE)
 	SIZE := (SIZE + 5)
 	RED := ((RED + 10) MOD 255)
-	I : I + 1
+	I := I + 1
 ]
