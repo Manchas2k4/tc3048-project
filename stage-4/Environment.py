@@ -22,13 +22,13 @@ class Environment:
     def insert(self, variable):
         if not variable in self.__table:
             # the variable has not been declared.
-            self.__table[variable] = (None, None)
+            self.__table[variable] = None
             return True
         else:
             # the variable has already been declared.
             return False
         
-    def set(self, variable, type = None, value = None):
+    def set(self, variable, value):
         env = self
         found = False
         while env != None:
@@ -39,7 +39,7 @@ class Environment:
         
         if found:
             # the variable is declared.
-            env.__table[variable] = (type, value)
+            env.__table[variable] = value
             return True
         else: 
             # the variable is not declared.

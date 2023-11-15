@@ -1,5 +1,4 @@
 from Environment import *
-from Type import *
 import turtle
 
 class Node:
@@ -207,7 +206,7 @@ class IfElse(Void):
 	pass
 
 class While (Void):
-	def __init__(self, __condition, sequence, line = None):
+	def __init__(self, condition, sequence, line = None):
 		super().__init__(line)
 		self.__condition = condition
 		self.__sequence = sequence

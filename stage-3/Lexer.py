@@ -31,7 +31,7 @@ class Tag(IntEnum):
 	COLOR = 470
 	PENWIDTH = 471
 	PRINT = 472
-	REPEAT = 473
+	WHILE = 473
 	IF = 474
 	IFELSE = 475
 	HOME = 476
@@ -108,6 +108,7 @@ class Lexer:
 		self.__Tokens["HOME"] = Token(Tag.HOME, "HOME")
 		self.__Tokens["CLEAR"] = Token(Tag.CLEAR, "CLEAR")
 		self.__Tokens["CLS"] = Token(Tag.CLEAR, "CLEAR")
+		self.__Tokens["CIRCLE"] = Token(Tag.CIRCLE, "CIRCLE")
 		self.__Tokens["ARC"] = Token(Tag.ARC, "ARC")
 		self.__Tokens["PENUP"] = Token(Tag.PENUP, "PENUP")
 		self.__Tokens["PU"] = Token(Tag.PENUP, "PENUP")
@@ -116,7 +117,7 @@ class Lexer:
 		self.__Tokens["COLOR"] = Token(Tag.COLOR, "COLOR")
 		self.__Tokens["PENWIDTH"] = Token(Tag.PENWIDTH, "PENWIDTH")
 		self.__Tokens["PRINT"] = Token(Tag.PRINT, "PRINT")
-		self.__Tokens["REPEAT"] = Token(Tag.REPEAT, "REPEAT")
+		self.__Tokens["WHILE"] = Token(Tag.WHILE, "WHILE")
 		self.__Tokens["IF"] = Token(Tag.IF, "IF")
 		self.__Tokens["IFELSE"] = Token(Tag.IFELSE, "IFELSE")
 		self.__Tokens["NOT"] = Token(Tag.NOT, "NOT")

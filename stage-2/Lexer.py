@@ -31,7 +31,7 @@ class Tag(IntEnum):
 	COLOR = 470
 	PENWIDTH = 471
 	PRINT = 472
-	REPEAT = 473
+	WHILE = 473
 	IF = 474
 	IFELSE = 475
 	HOME = 476
@@ -56,27 +56,31 @@ class Token:
 		
 	def __str__(self):
 		if self.__tag == Tag.GEQ:
-			return "'>='"
+			return "Token - value >="
 		elif self.__tag == Tag.LEQ:
-			return "'<='"
+			return "Token - value <="
 		elif self.__tag == Tag.NEQ:
-			return "'<>'"
+			return "Token - value <>"
 		elif self.__tag == Tag.ASSIGN:
-			return "':='"
+			return "Token - value :="
 		elif self.__tag == Tag.TRUE:
-			return "'#t'"
+			return "Token - value TRUE"
 		elif self.__tag == Tag.FALSE:
-			return "'#f'"
+			return "Token - value FALSE"
+		elif self.__tag == Tag.VAR:
+			return "Token - value VAR"
 		elif self.__tag == Tag.NUMBER:
-			return "numeric constant"
+			return "Number - value: " + str(self.__value)
+		elif self.__tag == Tag.NUMBER:
+			return "Number - value: " + str(self.__value)
 		elif self.__tag == Tag.ID:
-			return "'" + str(self.__value) + "'"
+			return "Token - lexeme: " + str(self.__value)
 		elif self.__tag >= Tag.VAR and self.__tag <= Tag.MOD:
-			return "'" +  str(self.__value).lower() + "'"
+			return "Reserved Token - lexeme: " + str(self.__value)
 		elif self.__tag == Tag.STRING:
-			return "string constant"
+			return "String - text: " + str(self.__value)
 		else:
-			return "'" + chr(self.__tag) + "'" 
+			return "Token - value " + chr(self.__tag)
 			
 class Lexer:
 	__peek = ' '
@@ -104,6 +108,7 @@ class Lexer:
 		self.__Tokens["HOME"] = Token(Tag.HOME, "HOME")
 		self.__Tokens["CLEAR"] = Token(Tag.CLEAR, "CLEAR")
 		self.__Tokens["CLS"] = Token(Tag.CLEAR, "CLEAR")
+		self.__Tokens["CIRCLE"] = Token(Tag.CIRCLE, "CIRCLE")
 		self.__Tokens["ARC"] = Token(Tag.ARC, "ARC")
 		self.__Tokens["PENUP"] = Token(Tag.PENUP, "PENUP")
 		self.__Tokens["PU"] = Token(Tag.PENUP, "PENUP")
@@ -112,7 +117,7 @@ class Lexer:
 		self.__Tokens["COLOR"] = Token(Tag.COLOR, "COLOR")
 		self.__Tokens["PENWIDTH"] = Token(Tag.PENWIDTH, "PENWIDTH")
 		self.__Tokens["PRINT"] = Token(Tag.PRINT, "PRINT")
-		self.__Tokens["REPEAT"] = Token(Tag.REPEAT, "REPEAT")
+		self.__Tokens["WHILE"] = Token(Tag.WHILE, "WHILE")
 		self.__Tokens["IF"] = Token(Tag.IF, "IF")
 		self.__Tokens["IFELSE"] = Token(Tag.IFELSE, "IFELSE")
 		self.__Tokens["NOT"] = Token(Tag.NOT, "NOT")
